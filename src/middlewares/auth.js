@@ -1,4 +1,4 @@
-module.exports = async (req, res, next) => {
+module.exports = (req, res, next) => {
   const { apikey } = req.headers;
 
   if (!apikey || apikey !== 'F112020@SMEQ@123QWEASDZXC') {

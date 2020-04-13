@@ -6,7 +6,7 @@ const xlsxtojson = require("xlsx-to-json-lc");
 const Excel = require('../models/Excel');
 
 module.exports = {
-  async import(req, res, fileName) {
+  async importFile(req, res, fileName) {
     req.setTimeout(10000000);
     try {
       if (req.file) {
