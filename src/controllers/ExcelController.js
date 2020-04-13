@@ -52,7 +52,7 @@ module.exports = {
 
               result.shift();
 
-              processRecords(0, 100000, 10 * 1000, result, () => {
+              processRecords(0, 100000, 15 * 1000, result, () => {
                 return res.status(201).json('Importado com sucesso!');
               });
 
