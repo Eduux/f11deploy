@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://f11equadros:endycsmu@f11-w2cla.mongodb.net/f11?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://f11eduardos:endycsmu@geonosis.mongodb.umbler.com:50516/f11', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 
 module.exports = mongoose;
