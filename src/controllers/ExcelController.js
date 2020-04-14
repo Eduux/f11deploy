@@ -24,7 +24,7 @@ module.exports = {
 
           json.shift();
 
-          processRecords(0, 15000, 10 * 1000, json, () => {
+          processRecords(0, 25000, 12 * 1000, json, () => {
             return res.status(201).json('Importado com sucesso!');
           });
         }
@@ -35,7 +35,7 @@ module.exports = {
 
               result.shift();
 
-              processRecords(0, 15000, 10 * 1000, result, () => {
+              processRecords(0, 25000, 12 * 1000, result, () => {
                 return res.status(201).json('Importado com sucesso!');
               });
 
@@ -52,7 +52,7 @@ module.exports = {
 
               result.shift();
 
-              processRecords(0, 15000, 10 * 1000, result, () => {
+              processRecords(0, 25000, 12 * 1000, result, () => {
                 return res.status(201).json('Importado com sucesso!');
               });
 
