@@ -7,7 +7,7 @@ const Excel = require('../models/Excel');
 
 module.exports = {
   async import(req, res, fileName) {
-    req.setTimeout(1,8e+6);
+    req.setTimeout(1000 * 60 * 60 * 24);
     try {
       if (req.file) {
         const file = req.file;
@@ -15,6 +15,7 @@ module.exports = {
         const path = fileName + '/temp/' + file.filename;
 
         if(findExtension === 'csv') {
+
           const json = await csvtojson({
             delimiter: ';',
             includeColumns: /(UF|MUNICIPIO|LOGRADOURO|NUM_FACHADA|COMPLEMENTO|CEP|BAIRRO|QUANTIDADE_UMS|COD_VIABILIDADE)/
@@ -24,7 +25,7 @@ module.exports = {
 
           json.shift();
 
-          processRecords(0, 25000, 12 * 1000, json, () => {
+          processRecords(json, () => {
             return res.status(201).json('Importado com sucesso!');
           });
         }
@@ -35,7 +36,7 @@ module.exports = {
 
               result.shift();
 
-              processRecords(0, 25000, 12 * 1000, result, () => {
+              processRecords(result, () => {
                 return res.status(201).json('Importado com sucesso!');
               });
 
@@ -52,7 +53,7 @@ module.exports = {
 
               result.shift();
 
-              processRecords(0, 25000, 12 * 1000, result, () => {
+              processRecords(result, () => {
                 return res.status(201).json('Importado com sucesso!');
               });
 
@@ -95,7 +96,7 @@ module.exports = {
     }
   },
   async findByExcel(req, res, fileName) {
-    req.setTimeout(1,8e+6);
+    req.setTimeout(1000 * 60 * 60 * 24);
     try {
       if (req.file) {
         const file = req.file;
@@ -166,7 +167,6 @@ module.exports = {
 
               const roofResult = [];
               result.forEach((item, index) => {
-                console.log(index);
                 if (searched.find(s => (s.CEP === item.CEP && s.NUM_FACHADA === item['Número']))) {
                   roofResult.push({ ...item, hasRoof:'Sim' });
                 } else {
@@ -199,13 +199,13 @@ module.exports = {
 }
 
 
-function processRecords(startIdx, n, delay, json, cb) {
-  if (startIdx >= json.length) {
-    return cb();
+function processRecords(json, cb) {
+  const Bulk = Excel.collection.initializeOrderedBulkOp();
+  for (var i = 0; i < json.length; ++i) {
+    Bulk.insert(json[i]);
   }
-  Excel.insertMany(json.slice(startIdx, startIdx + n), (err,) => {
-    console.log('oi');
+  Bulk.execute(function(err,result) {
     if (err) throw err;
-    setTimeout(() => processRecords(startIdx + n, n, delay, json, cb), delay);
+    cb();
   });
 }
