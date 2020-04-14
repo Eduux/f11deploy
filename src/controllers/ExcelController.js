@@ -7,7 +7,7 @@ const Excel = require('../models/Excel');
 
 module.exports = {
   async import(req, res, fileName) {
-    req.setTimeout(10000000);
+    req.setTimeout(1000000000);
     try {
       if (req.file) {
         const file = req.file;
@@ -95,7 +95,7 @@ module.exports = {
     }
   },
   async findByExcel(req, res, fileName) {
-    req.setTimeout(10000000);
+    req.setTimeout(1000000000);
     try {
       if (req.file) {
         const file = req.file;

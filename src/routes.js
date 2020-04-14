@@ -29,6 +29,10 @@ routes.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, './front', 'index.html'));
 });
 
+routes.get('/import-area', function (req, res) {
+  res.sendFile(path.join(__dirname, './front', 'index.html'));
+});
+
 
 routes.use(authMiddleware);
 
