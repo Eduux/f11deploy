@@ -7,7 +7,7 @@ const Excel = require('../models/Excel');
 
 module.exports = {
   async import(req, res, fileName) {
-    req.setTimeout(1000000000);
+    req.setTimeout(1000000000000);
     try {
       if (req.file) {
         const file = req.file;
@@ -24,7 +24,7 @@ module.exports = {
 
           json.shift();
 
-          processRecords(0, 100000, 10 * 1000, json, () => {
+          processRecords(0, 15000, 10 * 1000, json, () => {
             return res.status(201).json('Importado com sucesso!');
           });
         }
@@ -35,7 +35,7 @@ module.exports = {
 
               result.shift();
 
-              processRecords(0, 100000, 10 * 1000, result, () => {
+              processRecords(0, 15000, 10 * 1000, result, () => {
                 return res.status(201).json('Importado com sucesso!');
               });
 
@@ -52,7 +52,7 @@ module.exports = {
 
               result.shift();
 
-              processRecords(0, 100000, 15 * 1000, result, () => {
+              processRecords(0, 15000, 10 * 1000, result, () => {
                 return res.status(201).json('Importado com sucesso!');
               });
 
@@ -95,7 +95,7 @@ module.exports = {
     }
   },
   async findByExcel(req, res, fileName) {
-    req.setTimeout(1000000000);
+    req.setTimeout(1000000000000);
     try {
       if (req.file) {
         const file = req.file;
@@ -204,6 +204,7 @@ function processRecords(startIdx, n, delay, json, cb) {
     return cb();
   }
   Excel.insertMany(json.slice(startIdx, startIdx + n), (err,) => {
+    console.log('oi');
     if (err) throw err;
     setTimeout(() => processRecords(startIdx + n, n, delay, json, cb), delay);
   });
